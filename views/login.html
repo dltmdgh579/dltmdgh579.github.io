@@ -7,6 +7,9 @@
     </head>
     <body>
         <h1>로그인</h1>
+        <% if (message.length > 0) { %>
+            <%= message %>
+        <% } %>
 
         <br>
         <form method="post" action="/login">

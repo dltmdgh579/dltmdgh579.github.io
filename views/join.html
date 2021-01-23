@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <title>사용자 추가</title>
+    </head>
+    <body>
+        <h1>사용자 추가</h1>
+        <% if (message.length > 0) { %>
+            <%= message %>
+        <% } %>
+        <br>
+        <form method="post" action="/join">
+            <table>
+                <tr>
+                    <td><label>아이디</label></td>
+                    <td><input type="text" name="id"></td>
+                </tr>
+                <tr>
+                    <td><label>비밀번호</label></td>
+                    <td><input type="password" name="password"></td>
+                </tr>
+                <tr>
+                    <td><label>사용자이름</label></td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <td><label>나이</label></td>
+                    <td><input type="text" name="age"></td>
+                </tr>
+            </table>
+            <input type="submit" value="완료" name="">
+            <a href="/login">로그인하러가기</a>
+        </form>
+    </body>
+</html>

@@ -29,6 +29,22 @@
             </table>
             <input type="submit" value="완료" name="">
             <a href="/login">로그인하러가기</a>
+            <input type="button" value="POST" onclick="post()"/>
+            <script>
+                const URL = "https://chabdghuz2.execute-api.ap-northeast-2.amazonaws.com/asd/";
+                const data = {id1:req.body.id1, password:req.body.password ,name:req.body.name, age:req.body.age}
+                function post() {
+                    fetch(URL, {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Accept' : 'application/json'
+                        }
+                    }).then(res => res.json())
+                    .then(response => console.log('Success:', JSON.stringify(response)))
+                    .catch(err => console.error('Error:', err))
+                }
+            </script>
         </form>
     </body>
 </html>

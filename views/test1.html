@@ -25,7 +25,7 @@
         <input type="button" value="GET" onclick="post()"/>
         <script>
             const URL = "https://chabdghuz2.execute-api.ap-northeast-2.amazonaws.com/asd/";
-            const data = {password, name, age}
+            const data = {id1:req.body.id1, password:req.body.password ,name:req.body.name, age:req.body.age}
             function post() {
                 fetch(URL, {
                     method: 'POST',

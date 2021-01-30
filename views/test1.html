@@ -22,18 +22,18 @@
                 <td><input type="text" name="age"></td>
             </tr>
         </table>
-        <input type="button" value="POST" onclick="post()"/>
+        <input type="button" value="회의 종료" onclick="post()"/>
         <script>
             const URL = "https://chabdghuz2.execute-api.ap-northeast-2.amazonaws.com/asd/";
             function post() {
                 fetch(URL, {
-                    method: 'POST',
-                    data: JSON.stringify({
+                    "method": "POST",
+                    "data": JSON.stringify({
                         "title": "Test",
                         "body": "I am testing!",
                         "userId": 1
                     }),
-                    headers: {
+                    "headers": {
                         'Accept' : 'application/json'
                     }
                 }).then(res => res.json())

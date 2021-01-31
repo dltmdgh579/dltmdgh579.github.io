@@ -34,7 +34,7 @@
                         "userId": 1
                     }),
                     "headers": {
-                        'Accept' : 'application/json'
+                        'Access-Control-Allow-Origin':'*'
                     }
                 }).then(res => res.json())
                 .then(response => console.log('Success:', JSON.stringify(response)))

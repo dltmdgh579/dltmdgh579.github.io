@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Speech to Text</title>
+        <style>
+            body{
+                text-align: center;
+            }
+
+            button{
+                padding: 8px;
+                /*border-radius: 6px;*/
+            }
+            #message {
+                color: #996600;
+            }
+
+            .textWrapper{
+                width: 800px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: row;
+            }
+            .textbox{
+                height: 100px;
+                border: 1px solid #d3d3d3;
+                flex: 1;
+                margin : 5px 15px;
+                border-radius: 6px;
+                text-align: left;
+                padding: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Speech to Text Example!!!</h1>
+
+        <button id="speech" onclick="speech_to_text()">Start STT</button>
+        <button id="stop" onclick="stop()">Stop</button>
+        <p id="message">버튼을 누르고 아무말이나 하세요.</p>
+
+        <div class="textWrapper">
+            <div id="korea" class="textbox"></div>
+            <div id="english" class="textbox"></div>
+        </div>
+
+        <script type="text/javascript">
+
+            var message = document.querySelector("#message");
+            var button = document.querySelector("#speech");
+            var korea = document.querySelector("#korea");
+            var english = document.querySelector("#english");
+            var isRecognizing = false;
+
+            if ('SpeechRecognition' in window) {
+            // Speech recognition support. Talk to your apps!
+            console.log("음성인식을 지원하는 브라우저입니다.")
+            }
+
+            try {
+                var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+            } catch(e){
+                console.error(e);
+            }
+
+            function speech_to_text(){
+                if('webkitSpeechRecognition' in window){
+
+                    recognition.lang = 'ko-KR'; //선택하게 해줘야 할듯 .
+                    recognition.interimResults = true;
+                    recognition.maxAlternatives = 5;
+                    recognition.continuous = true;
+                    recognition.start();
+
+                    var finalTranscripts = '';
+
+                    recognition.onstart = function(){
+                        console.log("음성인식이 시작 되었습니다. 이제 마이크에 무슨 말이든 하세요.")
+                        message.innerHTML = "음성인식 시작...";
+                        button.innerHTML = "Listening...";
+                        button.disabled = true;
+                    }
+
+                    recognition.onspeechend = function(){
+                        message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+                        button.disabled = false;
+                        button.innerHTML = "Start STT";
+                    }
+
+                    recognition.onresult = function(event) {
+                        var interimTranscripts = '';
+                        for(var i = event.resultIndex; i < event.results.length; i++){
+                            var transcript = event.results[i][0].transcript;
+                            transcript.replace("\n", "<br>");
+                            if(event.results[i].isFinal){
+                                finalTranscripts += transcript;
+                            }else{
+                                interimTranscripts += transcript;
+                            }
+                            korea.innerHTML = finalTranscripts + interimTranscripts;
+                        };
+                        console.log('You said: ', event.results[0][0].transcript);
+                    }
+                }else{
+                    r.innerHTML = "지원하지 않는 브라우저입니다. 크롬이나 엣지을 이용하세요";
+                }
+            }
+            function stop(){
+                recognition.stop();
+                message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+                button.disabled = false;
+                button.innerHTML = "Start STT";
+                isRecognizing = false;
+            }
+        </script>
+    </body>
+</html>

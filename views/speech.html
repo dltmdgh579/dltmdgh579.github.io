@@ -37,7 +37,8 @@
         <h1>Speech to Text Example!!!</h1>
 
         <button id="speech" onclick="speech_to_text()">Start STT</button>
-        <input type="button" value = "회의종료" id="stop" onclick="stop()"/>
+        <button id="stop" onclick="stop()">Stop</button>
+        <input type="button" value = "회의종료" onclick="post()"/>
         <p id="message">버튼을 누르고 아무말이나 하세요.</p>
 
         <div class="textWrapper">
@@ -63,6 +64,8 @@
             } catch(e){
                 console.error(e);
             }
+
+            var resText;
 
             function speech_to_text(){
                 if('webkitSpeechRecognition' in window){
@@ -98,7 +101,7 @@
                             }else{
                                 interimTranscripts += transcript;
                             }
-                            var resText = finalTranscripts + interimTranscripts;
+                            resText = finalTranscripts + interimTranscripts;
                             korea.innerHTML = resText;
                         };
                         console.log('You said: ', resText);
@@ -113,24 +116,22 @@
                 button.disabled = false;
                 button.innerHTML = "Start STT";
                 isRecognizing = false;
-
-                const URL = "https://chabdghuz2.execute-api.ap-northeast-2.amazonaws.com/asd/";
-                function post() {
-                    fetch(URL, {
-                        method: "POST",
-                        body: JSON.stringify({
-                            title: "Test",
-                            str: resText,
-                            userId: 1
-                        }),
-                        headers: {
-                            'Accept' : 'application/json'
-                        }
-                    }).then(res => res.json())
-                    .then(response => console.log('Success:', JSON.stringify(response)))
-                    .catch(err => console.error('Error:', err))
                 }
-
+            const URL = "https://chabdghuz2.execute-api.ap-northeast-2.amazonaws.com/asd/";
+            function post() {
+                fetch(URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        title: "Test",
+                        str: resText,
+                        userId: 1
+                    }),
+                    headers: {
+                        'Accept' : 'application/json'
+                    }
+                }).then(res => res.json())
+                .then(response => console.log('Success:', JSON.stringify(response)))
+                .catch(err => console.error('Error:', err))
             }
         </script>
     </body>
